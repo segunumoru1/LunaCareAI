@@ -7,6 +7,10 @@ from openai import OpenAI
 from django.conf import settings
 import logging
 logger = logging.getLogger(__name__)
+import io
+from pathlib import Path
+from rest_framework.parsers import JSONParser
+from django.http import HttpResponse
 
 class DemoApiView(APIView):
     '''
@@ -52,4 +56,31 @@ class OpenAIChatView(APIView):
             logger.error(f"Error calling OpenAI API: {(e)}")
             return Response({"error": "An error occurred while processing your request."}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
+
+
+class TextToSpeechView(APIView):
+    parser_classes = [JSONParser]
+
+    def post(self, request, format=None):
+        text = request.data.get('text')
+        if not text:
+            return Response({"error": "No text provided."}, status=status.HTTP_400_BAD_REQUEST)
+
+        try:
+            client = OpenAI()
+            response = client.audio.speech.create(
+                model="tts-1",
+                voice="alloy",
+                input=text
+            )
+            
+            # Direct streaming from OpenAI response (assuming `response` is a streamable response)
+            # This assumes `response.content` gives you access to the stream
+            # Adjust based on how the OpenAI client library handles response streams
+            return HttpResponse(response.content, content_type='audio/mpeg', headers={
+                'Content-Disposition': 'attachment; filename="speech.mp3"'
+            })
+
+        except Exception as e:
+            return Response({"error": str(e)}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 

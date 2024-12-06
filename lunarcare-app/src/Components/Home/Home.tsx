@@ -1,10 +1,11 @@
 // Components/Home/Home.tsx
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchTip } from "../../Services/tipsSlice";
 import { AppDispatch } from "../../store";
 import "./Home.css";
 import MarkdownRenderer from "../Common/MarkdownRender";
+import { fetchAudio } from "../../Services/textToSpeechSlice";
 
 function Home() {
   const [inputValue, setInputValue] = useState("");
@@ -15,6 +16,7 @@ function Home() {
     (state: any) => state.tips
   );
 
+  const audioUrl = useSelector((state: any) => state.textToSpeech.audioUrl); // Access the audio URL from Redux store
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setInputValue(e.target.value);
   };
@@ -23,6 +25,19 @@ function Home() {
     dispatch(fetchTip(inputValue)); // Dispatches the action to get OpenAI response
     setInputValue(""); // Clear the input after dispatching
   };
+
+  useEffect(() => {
+    console.log("Dispatched fetchAudio ", audioUrl);
+  }, [audioUrl]);
+
+  useEffect(() => {
+    const fetchAudioAsync = async () => {
+      if (currentTip) {
+        dispatch(fetchAudio(currentTip)); // Dispatch action to convert text to speech
+      }
+    };
+    fetchAudioAsync();
+  }, [currentTip]);
 
   return (
     <div>
@@ -56,6 +71,8 @@ function Home() {
           )}
         </div>
       </div>
+      {audioUrl && <audio controls src={audioUrl} autoPlay />}
+      {/* Render audio element if URL is available */}
     </div>
   );
 }
