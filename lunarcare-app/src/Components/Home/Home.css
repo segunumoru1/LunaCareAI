@@ -42,3 +42,19 @@
   width: calc(100% - 24px); /* Account for padding and border */
   box-sizing: border-box; /* Include padding and border in width */
 }
+
+.tip-box {
+  width: 475px; /* Set the width of the rectangle */
+  height: 250px; /* Set the height of the rectangle */
+  padding: 10px; /* Padding inside the box for some space around the text */
+  margin: 20px; /* Optional: Adds space around the outer edge of the box */
+  overflow-y: auto; /* Enables vertical scrolling if content overflows */
+  background-color: #f4f4f4; /* Light grey background for visibility */
+  border: 1px solid #ccc; /* Light grey border for a subtle box outline */
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Optional: Adds subtle shadow for depth */
+  font-size: 16px; /* Sets the font size of the text */
+  color: #333; /* Dark grey color for the text for readability */
+  line-height: 1.5; /* Line height for better readability */
+  border-radius: 5px; /* Optional: Rounds the corners of the box */
+  box-sizing: border-box; /* Includes padding and border in the element's total width and height */
+}

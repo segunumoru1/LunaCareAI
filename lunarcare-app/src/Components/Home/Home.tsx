@@ -4,13 +4,16 @@ import { useDispatch, useSelector } from "react-redux";
 import { fetchTip } from "../../Services/tipsSlice";
 import { AppDispatch } from "../../store";
 import "./Home.css";
+import MarkdownRenderer from "../Common/MarkdownRender";
 
 function Home() {
   const [inputValue, setInputValue] = useState("");
   const dispatch = useDispatch<AppDispatch>();
 
   // Get current tip from the Redux state
-  const { currentTip, loading, error } = useSelector((state: any) => state.tips);
+  const { currentTip, loading, error } = useSelector(
+    (state: any) => state.tips
+  );
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setInputValue(e.target.value);
@@ -40,19 +43,18 @@ function Home() {
             Get a Tip
           </button>
         </div>
-      </div>
-
-      <div>
-        {loading && <p>Loading...</p>} {/* Display loading state */}
-        {error && <p>Error: {error}</p>} {/* Display error message */}
-        {currentTip && currentTip.length > 0 ? (
-          <div>
-            <h3>Current Tip:</h3>
-            <p>{currentTip}</p>
-          </div>
-        ) : (
-          ""
-        )}
+        <div className="tip-box">
+          {loading && <p>Loading...</p>} {/* Display loading state */}
+          {error && <p>Error: {error}</p>} {/* Display error message */}
+          {currentTip && currentTip.length > 0 ? (
+            <div>
+              <h3>Current Tip:</h3>
+              <MarkdownRenderer tip={currentTip} />
+            </div>
+          ) : (
+            ""
+          )}
+        </div>
       </div>
     </div>
   );
