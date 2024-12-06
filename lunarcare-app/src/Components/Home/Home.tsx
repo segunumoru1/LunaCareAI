@@ -36,7 +36,7 @@ function Home() {
         <button onClick={handleGetTip}>Get a Tip</button>
       </div>
       <div>
-        {currentTip ? (
+        {currentTip && currentTip.length > 0 ? (
           <div>
             <h3>Current Tip:</h3>
             <p>{currentTip}</p>
