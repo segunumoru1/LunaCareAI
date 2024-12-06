@@ -1,0 +1,44 @@
+/* Container for the current tip */
+.tip-container {
+  margin: 20px auto;
+  padding: 20px;
+  border-radius: 8px;
+  background-color: #f3f4f6; /* Light gray background */
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  width: 80%;
+  max-width: 500px;
+  text-align: center;
+}
+
+/* Styling for the tip text */
+.tip-text {
+  font-size: 1.2rem;
+  color: #333;
+  margin-bottom: 20px;
+}
+
+/* Button styling */
+.tip-button {
+  background-color: #007bff; /* Bootstrap blue */
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 1rem;
+  transition: background-color 0.3s ease;
+}
+
+.tip-button:hover {
+  background-color: #0056b3; /* Darker blue */
+}
+
+/* Input styling for tip request */
+.tip-input {
+  padding: 10px;
+  margin-bottom: 20px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  width: calc(100% - 24px); /* Account for padding and border */
+  box-sizing: border-box; /* Include padding and border in width */
+}
