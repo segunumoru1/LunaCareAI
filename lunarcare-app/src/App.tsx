@@ -1,6 +1,7 @@
 import React from "react";
 import { BrowserRouter as Router, Route, Routes, Link } from "react-router-dom";
 import Home from "./Components/Home/Home";
+import Messages from "./Components/Api/DjangoMessages"; 
 
 interface IState {
   currentTab: string;
@@ -108,6 +109,12 @@ class App extends React.Component<{}, IState> {
                   >
                     Health Tracker
                   </Link>
+                  <Link
+                    to="/messages"
+                    onClick={() => this.setActiveTab("messages")}
+                  >
+                    Django Messages
+                  </Link>
                 </li>
               </ul>
             </nav>
@@ -118,6 +125,7 @@ class App extends React.Component<{}, IState> {
               <Route path="/resources" element={<Resources />} />
               <Route path="/support" element={<Support />} />
               <Route path="/tracker" element={<Tracker />} />
+              <Route path="/messages" element={<Messages />} />
             </Routes>
           </main>
         </div>
