@@ -1,3 +1,4 @@
+// Components/Home/Home.tsx
 import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchTip } from "../../Services/tipsSlice";
@@ -8,16 +9,15 @@ function Home() {
   const [inputValue, setInputValue] = useState("");
   const dispatch = useDispatch<AppDispatch>();
 
-  // need to retrieve the response from the dispatch
-  // and display it in the UI
-  const currentTip = useSelector((state: any) => state.tips.currentTip);
+  // Get current tip from the Redux state
+  const { currentTip, loading, error } = useSelector((state: any) => state.tips);
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setInputValue(e.target.value);
   };
 
   const handleGetTip = () => {
-    dispatch(fetchTip(inputValue)); // Dispatches the action to update the tip
+    dispatch(fetchTip(inputValue)); // Dispatches the action to get OpenAI response
     setInputValue(""); // Clear the input after dispatching
   };
 
@@ -41,7 +41,10 @@ function Home() {
           </button>
         </div>
       </div>
+
       <div>
+        {loading && <p>Loading...</p>} {/* Display loading state */}
+        {error && <p>Error: {error}</p>} {/* Display error message */}
         {currentTip && currentTip.length > 0 ? (
           <div>
             <h3>Current Tip:</h3>

@@ -1,26 +1,29 @@
+// Services/tipsSlice.ts
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
 
+// Create an async thunk for fetching tips
+export const fetchTip = createAsyncThunk(
+  "tips/fetchTip",
+  async (userInput: string) => {
+    const response = await axios.post("http://localhost:8000/openai-chat/", {
+      user_input: userInput,
+    });
+    return response.data.response; // Return OpenAI's response
+  }
+);
+
 interface TipsState {
   currentTip: string;
-  status: "idle" | "loading" | "succeeded" | "failed";
+  loading: boolean;
+  error: string | null;
 }
 
 const initialState: TipsState = {
   currentTip: "",
-  status: "idle",
+  loading: false,
+  error: null,
 };
-
-// Define an async thunk for fetching a tip
-export const fetchTip = createAsyncThunk(
-  "tips/fetchTip",
-
-  async (inputValue: string) => {
-    const payload = { inputValue: inputValue };
-    const response = await axios.post("http://localhost:3001/test", payload);
-    return response.data.tip; // Assuming the API returns an object with a 'tip' property
-  }
-);
 
 const tipsSlice = createSlice({
   name: "tips",
@@ -29,14 +32,16 @@ const tipsSlice = createSlice({
   extraReducers: (builder) => {
     builder
       .addCase(fetchTip.pending, (state) => {
-        state.status = "loading";
+        state.loading = true;
+        state.error = null;
       })
       .addCase(fetchTip.fulfilled, (state, action) => {
+        state.loading = false;
         state.currentTip = action.payload;
-        state.status = "succeeded";
       })
-      .addCase(fetchTip.rejected, (state) => {
-        state.status = "failed";
+      .addCase(fetchTip.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.error.message || "Something went wrong";
       });
   },
 });
