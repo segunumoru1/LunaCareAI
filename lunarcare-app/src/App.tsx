@@ -1,5 +1,6 @@
 import React from "react";
 import { BrowserRouter as Router, Route, Routes, Link } from "react-router-dom";
+import Home from "./Components/Home/Home";
 
 interface IState {
   currentTab: string;
@@ -123,17 +124,6 @@ class App extends React.Component<{}, IState> {
       </Router>
     );
   }
-}
-
-function Home() {
-  return (
-    <div>
-      <h2>Welcome to Lunar Care</h2>
-      <p>
-        Helping you navigate through postpartum with care and understanding.
-      </p>
-    </div>
-  );
 }
 
 function Resources() {
