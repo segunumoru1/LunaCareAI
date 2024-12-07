@@ -11,6 +11,7 @@ import io
 from pathlib import Path
 from rest_framework.parsers import JSONParser
 from django.http import HttpResponse
+from api.rag.app.chatbot import LunaCareBot
 
 class DemoApiView(APIView):
     '''
@@ -38,19 +39,28 @@ class OpenAIChatView(APIView):
 
         try:
             # Use the updated API method for chat completions
-            response = client.chat.completions.create(
-                model="gpt-4o",
-                messages=[
-                    {"role": "user", "content": user_input}
-                ],
-                max_tokens=100,
-                temperature=0.7,
-            )
+            # response = client.chat.completions.create(
+            #     model="gpt-4o",
+            #     messages=[
+            #         {"role": "user", "content": user_input}
+            #     ],
+            #     max_tokens=100,
+            #     temperature=0.7,
+            # )
+            
+
+            bot = LunaCareBot(use_nvidia=False)  # Set to True for NVIDIA
+            bot.initialize_vectorstore(settings.FEATURES_DATA)
+            user_query = "What are some tips for postpartum wellness?"
+            response = bot.generate_response(user_input)
+            print(response.content)
+
+
 
             # Extract the assistant's reply
-            assistant_reply = response.choices[0].message.content.strip()
+            # assistant_reply = response.choices[0].message.content.strip()
 
-            return Response({"response": assistant_reply})
+            return Response({"response": response.content})
 
         except Exception as e:  # Correct exception handling
             logger.error(f"Error calling OpenAI API: {(e)}")
