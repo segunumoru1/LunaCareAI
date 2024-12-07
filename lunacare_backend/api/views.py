@@ -49,11 +49,15 @@ class OpenAIChatView(APIView):
             # )
             
 
-            bot = LunaCareBot(use_nvidia=False)  # Set to True for NVIDIA
-            bot.initialize_vectorstore(settings.FEATURES_DATA)
-            user_query = "What are some tips for postpartum wellness?"
-            response = bot.generate_response(user_input)
-            print(response.content)
+            # bot = LunaCareBot(use_nvidia=False)  # Set to True for NVIDIA
+            # bot.initialize_vectorstore(settings.FEATURES_DATA)
+            # user_query = "What are some tips for postpartum wellness?"
+            
+
+            bot = getattr(settings, 'LUNA_CARE_BOT', None)
+            if bot:
+                response = bot.generate_response(user_input)
+                print(response.content)
 
 
 
