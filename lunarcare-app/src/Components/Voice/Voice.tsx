@@ -1,20 +1,16 @@
-// create a react component that has an avatar and with a header Voice Mode
-// the avatar should have a toggle switch to switch between voice and chat mode
-
 import React, { useEffect, useRef, useState } from "react";
 import "./Voice.css";
 import AvatarImage from "../../Assets/Images/avatar.png";
 import ToggleSwitch from "../Common/ToggleSwitch/ToggleSwitch"; // Import the ToggleSwitch component
-import exp from "constants";
 import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch } from "../../store";
 import { fetchTip } from "../../Services/tipsSlice";
 import { ReactComponent as MicrophoneIcon } from "../../Assets/Icons/microphone-2.svg";
-
 import {
   fetchAudio,
   TextToSpeechState,
 } from "../../Services/textToSpeechSlice";
+import { debounce } from "lodash"; // Import debounce if implementing debouncing
 
 function Voice() {
   type SpeechRecognition = typeof window.webkitSpeechRecognition;
@@ -31,6 +27,9 @@ function Voice() {
   );
 
   const recognitionRef = useRef<SpeechRecognition | null>(null);
+  const audioRef = useRef<HTMLAudioElement | null>(null);
+  const isPlayingRef = useRef(false);
+  const lastAudioUrlRef = useRef<string | null>(null);
 
   const dispatch = useDispatch<AppDispatch>();
 
@@ -39,14 +38,26 @@ function Voice() {
   const [inputValue, setInputValue] = useState("");
   const [editableAudioUrl, setEditableAudioUrl] = useState("");
 
-  useEffect(() => {
-    if (currentTip) {
-      dispatch(fetchAudio(currentTip));
-    }
-  }, [currentTip, dispatch]);
+  // Debounced fetchAudio to prevent multiple dispatches
+  const debouncedFetchAudio = useRef(
+    debounce((tip: string) => { // Explicitly type 'tip' as string
+      console.log("Debounced fetchAudio for tip:", tip);
+      dispatch(fetchAudio(tip));
+    }, 300)
+  ).current;
 
   useEffect(() => {
-    setEditableAudioUrl(audioUrl);
+    if (currentTip) {
+      debouncedFetchAudio(currentTip);
+    }
+  }, [currentTip, debouncedFetchAudio]);
+
+  useEffect(() => {
+    console.log("audioUrl updated:", audioUrl);
+    if (audioUrl && audioUrl !== lastAudioUrlRef.current) {
+      setEditableAudioUrl(audioUrl);
+      lastAudioUrlRef.current = audioUrl;
+    }
   }, [audioUrl]);
 
   const startRecording = () => {
@@ -67,17 +78,19 @@ function Voice() {
 
     recognition.onstart = () => {
       setIsRecording(true);
+      console.log("Speech recognition started.");
     };
 
     recognition.onresult = (event: SpeechRecognitionEvent) => {
       const transcript = event.results[0][0].transcript; // Get the spoken text
       setInputValue(transcript); // Update the input field with the text
+      console.log("Speech recognized:", transcript);
 
       // Automatically send the message
       dispatch(fetchTip(transcript));
     };
 
-    recognition.onerror = (error: Event) => {
+    recognition.onerror = (error: any) => { // Changed type to any for better logging
       console.error("Speech recognition error:", error);
       setIsRecording(false);
       setIsProcessing(false);
@@ -97,24 +110,53 @@ function Voice() {
     setInputValue(e.target.value);
   };
 
-  const audioRef = useRef<HTMLAudioElement | null>(null);
-
   const clearInput = () => {
     setInputValue("");
     setEditableAudioUrl("");
-    audioRef.current?.pause();
+    if (audioRef.current) {
+      audioRef.current.pause();
+      audioRef.current = null;
+      isPlayingRef.current = false;
+    }
   };
 
   useEffect(() => {
-    if (editableAudioUrl && !isRecording) {
+    if (editableAudioUrl && !isRecording && !isPlayingRef.current) {
+      console.log("Attempting to play audio:", editableAudioUrl);
+
       if (audioRef.current) {
-        audioRef.current.pause(); // Pause the current audio
-        audioRef.current.currentTime = 0; // Reset playback
+        console.log("Pausing existing audio.");
+        audioRef.current.pause();
+        audioRef.current.currentTime = 0;
       }
-      audioRef.current = new Audio(editableAudioUrl); // Create a new audio instance
-      audioRef.current.play(); // Play the new audio
+
+      const newAudio = new Audio(editableAudioUrl);
+      audioRef.current = newAudio;
+      isPlayingRef.current = true;
+
+      newAudio.play().then(() => {
+        console.log("Audio playback started.");
+      }).catch((error) => {
+        console.error("Error playing audio:", error);
+        isPlayingRef.current = false;
+      });
+
+      newAudio.onended = () => {
+        console.log("Audio playback ended.");
+        setEditableAudioUrl("");
+        isPlayingRef.current = false;
+      };
     }
-  }, [editableAudioUrl]);
+
+    return () => {
+      if (audioRef.current) {
+        console.log("Cleaning up audio.");
+        audioRef.current.pause();
+        audioRef.current = null;
+        isPlayingRef.current = false;
+      }
+    };
+  }, [editableAudioUrl, isRecording]);
 
   return (
     <div className="avatar-container">
@@ -124,7 +166,8 @@ function Voice() {
         </div>
       </div>
       <div className="avatar-input-group">
-        <img src={AvatarImage} width={100} height={100} />
+        <img src={AvatarImage} width={100} height={100} alt="Avatar" />
+        {/* Add the ToggleSwitch component if needed */}
       </div>
       <input
         type="text"
@@ -140,9 +183,9 @@ function Voice() {
         <MicrophoneIcon />
       </button>
       <div>{isRecording && <p>Listening...</p>}</div>
-      <div>
-        {!editableAudioUrl || editableAudioUrl.length == 0 ? "Thinking..." : ""}
-      </div>
+     
+      {/* Optional: Display loading state */}
+      {audioLoading && <p>Thinking...</p>}
     </div>
   );
 }

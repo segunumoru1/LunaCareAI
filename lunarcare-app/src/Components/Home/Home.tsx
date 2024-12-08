@@ -93,10 +93,11 @@ function Home() {
   };
 
   useEffect(() => {
-    if (currentTip) {
+    // Dispatch fetchAudio only if not in voiceMode
+    if (currentTip && !voiceMode) {
       dispatch(fetchAudio(currentTip));
     }
-  }, [currentTip, dispatch]);
+  }, [currentTip, dispatch, voiceMode]);
 
   return (
     <div className="outer-container">
@@ -125,7 +126,7 @@ function Home() {
           </div>
           <div className="tip-box">
             {loading && <p>Loading...</p>} {/* Display loading state */}
-            {error && <p>Error: {error}</p>} {/* Display error message */}{" "}
+            {error && <p>Error: {error}</p>} {/* Display error message */}
             {currentTip && currentTip.length > 0 ? (
               <div>
                 <h3>Current Tip:</h3>
