@@ -11,6 +11,7 @@ import {
   TextToSpeechState,
 } from "../../Services/textToSpeechSlice";
 import { debounce } from "lodash"; // Import debounce if implementing debouncing
+import VoiceDropdown from "../Common/VoiceDropdown/VoiceDropdown";
 
 function Voice() {
   type SpeechRecognition = typeof window.webkitSpeechRecognition;
@@ -40,9 +41,10 @@ function Voice() {
 
   // Debounced fetchAudio to prevent multiple dispatches
   const debouncedFetchAudio = useRef(
-    debounce((tip: string) => { // Explicitly type 'tip' as string
+    debounce((tip: string) => {
+      // Explicitly type 'tip' as string
       console.log("Debounced fetchAudio for tip:", tip);
-      dispatch(fetchAudio(tip));
+      dispatch(fetchAudio({ text: tip, voiceType: selectedLanguage }));
     }, 300)
   ).current;
 
@@ -90,7 +92,8 @@ function Voice() {
       dispatch(fetchTip(transcript));
     };
 
-    recognition.onerror = (error: any) => { // Changed type to any for better logging
+    recognition.onerror = (error: any) => {
+      // Changed type to any for better logging
       console.error("Speech recognition error:", error);
       setIsRecording(false);
       setIsProcessing(false);
@@ -134,12 +137,15 @@ function Voice() {
       audioRef.current = newAudio;
       isPlayingRef.current = true;
 
-      newAudio.play().then(() => {
-        console.log("Audio playback started.");
-      }).catch((error) => {
-        console.error("Error playing audio:", error);
-        isPlayingRef.current = false;
-      });
+      newAudio
+        .play()
+        .then(() => {
+          console.log("Audio playback started.");
+        })
+        .catch((error) => {
+          console.error("Error playing audio:", error);
+          isPlayingRef.current = false;
+        });
 
       newAudio.onended = () => {
         console.log("Audio playback ended.");
@@ -158,11 +164,19 @@ function Voice() {
     };
   }, [editableAudioUrl, isRecording]);
 
+  const [selectedLanguage, setSelectedLanguage] = useState("nova");
+  const selectLanguage = (voice: string): void => {
+    setSelectedLanguage(voice);
+  };
+
   return (
     <div className="avatar-container">
       <div className="block-center-align">
         <div className="avatar-header">
           <h1>Voice Mode</h1>
+          <div className="voice-dropdown">
+            <VoiceDropdown setSelected={selectLanguage} />
+          </div>
         </div>
       </div>
       <div className="avatar-input-group">
@@ -180,10 +194,12 @@ function Voice() {
         className={`record-button ${isRecording ? "recording" : ""}`}
         disabled={isProcessing}
       >
-        <MicrophoneIcon />
+        <div>
+          <MicrophoneIcon />
+        </div>
       </button>
       <div>{isRecording && <p>Listening...</p>}</div>
-     
+
       {/* Optional: Display loading state */}
       {audioLoading && <p>Thinking...</p>}
     </div>

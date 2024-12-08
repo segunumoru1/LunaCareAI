@@ -4,12 +4,12 @@ import axios from "axios";
 // Asynchronous thunk action
 export const fetchAudio = createAsyncThunk(
   "textToSpeech/fetchAudio",
-  async (text: string) => {
+  async ({ text, voiceType }: { text: string; voiceType: string }) => {
     try {
       const textToSpeechUrl = "http://localhost:8000/text-to-speech/";
       const response = await axios.post(
         textToSpeechUrl,
-        { text: text },
+        { text: text, voiceType: voiceType },
         {
           responseType: "blob", // Important for handling binary response data
         }

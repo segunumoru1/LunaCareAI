@@ -92,12 +92,11 @@ function Home() {
     recognition.start();
   };
 
-  useEffect(() => {
-    // Dispatch fetchAudio only if not in voiceMode
-    if (currentTip && !voiceMode) {
-      dispatch(fetchAudio(currentTip));
-    }
-  }, [currentTip, dispatch, voiceMode]);
+  // useEffect(() => {
+  //   if (currentTip) {
+  //     dispatch(fetchAudio(currentTip));
+  //   }
+  // }, [currentTip, dispatch]);
 
   return (
     <div className="outer-container">

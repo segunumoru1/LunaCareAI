@@ -77,6 +77,7 @@ class TextToSpeechView(APIView):
 
     def post(self, request, format=None):
         text = request.data.get('text')
+        voiceType = request.data.get('voiceType')
         if not text:
             return Response({"error": "No text provided."}, status=status.HTTP_400_BAD_REQUEST)
 
@@ -84,7 +85,7 @@ class TextToSpeechView(APIView):
             client = OpenAI()
             response = client.audio.speech.create(
                 model="tts-1",
-                voice="alloy",
+                voice=voiceType,
                 input=text
             )
             
