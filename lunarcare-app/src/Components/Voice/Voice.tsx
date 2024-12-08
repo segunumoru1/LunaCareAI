@@ -12,6 +12,7 @@ import {
 } from "../../Services/textToSpeechSlice";
 import { debounce } from "lodash"; // Import debounce if implementing debouncing
 import VoiceDropdown from "../Common/VoiceDropdown/VoiceDropdown";
+import useWebStorage from "../../Hooks/useWebStorage";
 
 function Voice() {
   type SpeechRecognition = typeof window.webkitSpeechRecognition;
@@ -27,6 +28,16 @@ function Voice() {
     (state: any) => state.textToSpeech as TextToSpeechState
   );
 
+  const [selectedVoice, setSelectedVoice] = useWebStorage("selectedVoice", "");
+
+  useEffect(() => {
+    if (selectedVoice) {
+      console.log("Selected voice:", selectedVoice);
+      console.log("Selected language:", selectedLanguage);
+      setSelectedLanguage(selectedVoice);
+    }
+  }, [selectedVoice]);
+
   const recognitionRef = useRef<SpeechRecognition | null>(null);
   const audioRef = useRef<HTMLAudioElement | null>(null);
   const isPlayingRef = useRef(false);
@@ -39,20 +50,25 @@ function Voice() {
   const [inputValue, setInputValue] = useState("");
   const [editableAudioUrl, setEditableAudioUrl] = useState("");
 
-  // Debounced fetchAudio to prevent multiple dispatches
-  const debouncedFetchAudio = useRef(
-    debounce((tip: string) => {
-      // Explicitly type 'tip' as string
+  // Create the ref
+  const debouncedFetchAudioRef = useRef<ReturnType<typeof debounce> | null>(
+    null
+  );
+
+  // Update the ref each time `selectedVoice` changes
+  useEffect(() => {
+    debouncedFetchAudioRef.current = debounce((tip) => {
       console.log("Debounced fetchAudio for tip:", tip);
-      dispatch(fetchAudio({ text: tip, voiceType: selectedLanguage }));
-    }, 300)
-  ).current;
+      dispatch(fetchAudio({ text: tip, voiceType: selectedVoice }));
+    }, 300);
+  }, [selectedVoice]); // Dependency on `selectedVoice`
 
   useEffect(() => {
     if (currentTip) {
-      debouncedFetchAudio(currentTip);
+      debouncedFetchAudioRef.current &&
+        debouncedFetchAudioRef.current(currentTip);
     }
-  }, [currentTip, debouncedFetchAudio]);
+  }, [currentTip]);
 
   useEffect(() => {
     console.log("audioUrl updated:", audioUrl);
@@ -164,9 +180,17 @@ function Voice() {
     };
   }, [editableAudioUrl, isRecording]);
 
-  const [selectedLanguage, setSelectedLanguage] = useState("nova");
+  const [selectedLanguage, setSelectedLanguage] = useState<string>("nova");
+
+  useEffect(() => {
+    console.log("Selected voice:", selectedVoice);
+    console.log("selected language:", selectedLanguage);
+  }, [selectedVoice, selectedLanguage]);
+
   const selectLanguage = (voice: string): void => {
     setSelectedLanguage(voice);
+    setSelectedVoice(voice);
+    console.log("Selected voice in parent:", voice);
   };
 
   return (
@@ -180,10 +204,17 @@ function Voice() {
         </div>
       </div>
       <div className="avatar-input-group">
-        <img src={AvatarImage} width={100} height={100} alt="Avatar" />
+        <img
+          className="avatar-shell"
+          src={AvatarImage}
+          width={100}
+          height={100}
+          alt="Avatar"
+        />
         {/* Add the ToggleSwitch component if needed */}
       </div>
       <input
+        className="voice-input"
         type="text"
         placeholder="Ask whatever you want..."
         value={inputValue}
@@ -198,10 +229,10 @@ function Voice() {
           <MicrophoneIcon />
         </div>
       </button>
-      <div>{isRecording && <p>Listening...</p>}</div>
-
-      {/* Optional: Display loading state */}
-      {audioLoading && <p>Thinking...</p>}
+      <div className="voice-status">
+        {isRecording && <p>Listening...</p>}
+        {audioLoading && <p>Thinking...</p>}
+      </div>
     </div>
   );
 }

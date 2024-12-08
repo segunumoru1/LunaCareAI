@@ -14,6 +14,7 @@ const VoiceDropdown = ({ setSelected }: VoiceDropdownProps) => {
   const handleChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
     setSelectedVoice(event.target.value);
     setSelected(event.target.value);
+    console.log("Selected voice  in handle change:", event.target.value);
   };
 
   return (
