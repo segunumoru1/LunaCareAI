@@ -7,8 +7,16 @@ import "./Home.css";
 import MarkdownRenderer from "../Common/MarkdownRender";
 import { fetchAudio } from "../../Services/textToSpeechSlice";
 import { ReactComponent as SendToAIIcon } from "../../Assets/Icons/send-2.svg";
+import ToggleSwitch from "../Common/ToggleSwitch/ToggleSwitch";
+import Voice from "../Voice/Voice";
 
 function Home() {
+  const [voiceMode, setVoiceMode] = useState(false); // State to determine if the voice mode is activated
+
+  const onToggle = () => {
+    setVoiceMode(!voiceMode);
+  };
+
   const [inputValue, setInputValue] = useState("");
   const dispatch = useDispatch<AppDispatch>();
 
@@ -47,36 +55,45 @@ function Home() {
   }, [currentTip]);
 
   return (
-    <div className="avatar-container">
-      <div className="avatar-header">
-        <h1>Hi, Jane</h1>
-        <p>Can I help you with anything?</p>
-      </div>
-      <div className="avatar-input-group">
-        <input
-          type="text"
-          placeholder="Ask whatever you want..."
-          value={inputValue}
-          onChange={handleInputChange}
-          onKeyDown={handleKeyDown}
-        />
-        <button onClick={handleGetTip}>
-          <SendToAIIcon className="white-stroke" />
-        </button>
-      </div>
-      <div className="tip-box">
-        {loading && <p>Loading...</p>} {/* Display loading state */}
-        {error && <p>Error: {error}</p>} {/* Display error message */}{" "}
-        {currentTip && currentTip.length > 0 ? (
-          <div>
-            <h3>Current Tip:</h3>
-            <MarkdownRenderer tip={currentTip} />
+    <div className="outer-container">
+      <ToggleSwitch toggle={onToggle} />
+      {voiceMode ? (
+        <Voice />
+      ) : (
+        <div className="avatar-container">
+          <div className="block-center-align">
+            <div className="avatar-header">
+              <h1>Hi, Jane</h1>
+              <p>Can I help you with anything?</p>
+            </div>
           </div>
-        ) : (
-          ""
-        )}
-      </div>
-      {audioUrl && <audio controls src={audioUrl} autoPlay />}
+          <div className="avatar-input-group">
+            <input
+              type="text"
+              placeholder="Ask whatever you want..."
+              value={inputValue}
+              onChange={handleInputChange}
+              onKeyDown={handleKeyDown}
+            />
+            <button onClick={handleGetTip}>
+              <SendToAIIcon className="white-stroke" />
+            </button>
+          </div>
+          <div className="tip-box">
+            {loading && <p>Loading...</p>} {/* Display loading state */}
+            {error && <p>Error: {error}</p>} {/* Display error message */}{" "}
+            {currentTip && currentTip.length > 0 ? (
+              <div>
+                <h3>Current Tip:</h3>
+                <MarkdownRenderer tip={currentTip} />
+              </div>
+            ) : (
+              ""
+            )}
+          </div>
+          {audioUrl && <audio controls src={audioUrl} autoPlay />}
+        </div>
+      )}
     </div>
   );
 }
