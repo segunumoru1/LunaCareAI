@@ -92,11 +92,11 @@ function Home() {
     recognition.start();
   };
 
-  useEffect(() => {
-    if (currentTip) {
-      dispatch(fetchAudio(currentTip));
-    }
-  }, [currentTip, dispatch]);
+  // useEffect(() => {
+  //   if (currentTip) {
+  //     dispatch(fetchAudio(currentTip));
+  //   }
+  // }, [currentTip, dispatch]);
 
   return (
     <div className="outer-container">

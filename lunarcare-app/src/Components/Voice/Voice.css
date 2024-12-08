@@ -140,3 +140,7 @@
 .white-stroke {
   stroke: white;
 }
+
+h1 {
+  margin-right: 1in; /* Adds a 1-inch gap between the header and the dropdown */
+}

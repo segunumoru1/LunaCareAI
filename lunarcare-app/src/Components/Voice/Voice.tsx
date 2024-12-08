@@ -15,6 +15,7 @@ import {
   fetchAudio,
   TextToSpeechState,
 } from "../../Services/textToSpeechSlice";
+import VoiceDropdown from "../Common/VoiceDropdown/VoiceDropdown";
 
 function Voice() {
   type SpeechRecognition = typeof window.webkitSpeechRecognition;
@@ -41,7 +42,7 @@ function Voice() {
 
   useEffect(() => {
     if (currentTip) {
-      dispatch(fetchAudio(currentTip));
+      dispatch(fetchAudio({ text: currentTip, voiceType: selectedLanguage }));
     }
   }, [currentTip, dispatch]);
 
@@ -116,11 +117,19 @@ function Voice() {
     }
   }, [editableAudioUrl]);
 
+  const [selectedLanguage, setSelectedLanguage] = useState("nova");
+  const selectLanguage = (voice: string): void => {
+    setSelectedLanguage(voice);
+  };
+
   return (
     <div className="avatar-container">
       <div className="block-center-align">
         <div className="avatar-header">
           <h1>Voice Mode</h1>
+          <div className="voice-dropdown">
+            <VoiceDropdown setSelected={selectLanguage} />
+          </div>
         </div>
       </div>
       <div className="avatar-input-group">
@@ -137,7 +146,9 @@ function Voice() {
         className={`record-button ${isRecording ? "recording" : ""}`}
         disabled={isProcessing}
       >
-        <MicrophoneIcon />
+        <div>
+          <MicrophoneIcon />
+        </div>
       </button>
       <div>{isRecording && <p>Listening...</p>}</div>
       <div>

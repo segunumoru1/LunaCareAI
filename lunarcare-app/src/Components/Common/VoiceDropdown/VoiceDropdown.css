@@ -1,0 +1,41 @@
+.voice-dropdown select {
+  width: 100%; /* Makes the select box full width */
+  padding: 8px; /* Adds padding inside the select box */
+  border-radius: 5px; /* Rounds the corners of the select box */
+  border: 1px solid #ccc; /* Adds a light border to the select box */
+  cursor: pointer; /* Changes cursor to indicate it's clickable */
+  background-color: white; /* Ensures the background is white */
+  appearance: none; /* Removes default system appearance */
+}
+
+.voice-dropdown {
+  position: relative; /* Allows absolute positioning within the dropdown */
+}
+
+.voice-dropdown > div {
+  position: absolute; /* Absolutely position the dropdown */
+  top: 100%; /* Positions the dropdown right below the toggle element */
+  left: 0; /* Aligns the dropdown to the left of the 'voice-dropdown' div */
+  min-width: 200px; /* Minimum width of the dropdown */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Adds a subtle shadow for depth */
+  border-radius: 5px; /* Rounds the corners */
+  background-color: white; /* Sets the background color to white */
+  z-index: 1000; /* Ensures the dropdown is above other content */
+  border: 1px solid #ccc; /* Adds a light border */
+}
+
+.voice-dropdown ul {
+  list-style: none; /* Removes default list styling */
+  padding: 10px 0; /* Adds padding inside the dropdown */
+  margin: 0; /* Removes default margin */
+}
+
+.voice-dropdown li {
+  padding: 8px 20px; /* Padding for each dropdown item */
+  cursor: pointer; /* Changes the cursor to a pointer to indicate clickable items */
+  transition: background-color 0.3s; /* Smooth transition for hover effect */
+}
+
+.voice-dropdown li:hover {
+  background-color: #f0f0f0; /* Light grey background on hover */
+}
