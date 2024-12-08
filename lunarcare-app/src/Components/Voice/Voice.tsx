@@ -50,22 +50,6 @@ function Voice() {
   const [inputValue, setInputValue] = useState("");
   const [editableAudioUrl, setEditableAudioUrl] = useState("");
 
-  // Debounced fetchAudio to prevent multiple dispatches
-  //   const debouncedFetchAudio = useRef(
-  //     debounce((tip: string) => {
-  //       // Explicitly type 'tip' as string
-  //       console.log("Debounced fetchAudio for tip:", tip);
-  //       dispatch(fetchAudio({ text: tip, voiceType: selectedVoice }));
-  //     }, 300)
-  //   ).current;
-
-  //   useEffect(() => {
-  //     debouncedFetchAudio.current = debounce((tip) => {
-  //       console.log("Debounced fetchAudio for tip:", tip);
-  //       dispatch(fetchAudio({ text: tip, voiceType: selectedVoice }));
-  //     }, 300);
-  //   }, [selectedVoice]); // Dependency on `selectedVoice`
-
   // Create the ref
   const debouncedFetchAudioRef = useRef<ReturnType<typeof debounce> | null>(
     null
