@@ -22,13 +22,13 @@ function ToggleSwitch({ toggle }: ToggleSwitchProps) {
         className={`toggle-btn ${isActive ? "active" : ""}`}
         onClick={() => setIsActive(true)}
       >
-        <ChatIcon /> Voice
+        <VoiceIcon /> Voice
       </button>
       <button
         className={`toggle-btn ${!isActive ? "active" : ""}`}
         onClick={() => setIsActive(false)}
       >
-        <VoiceIcon /> Chat
+        <ChatIcon /> Chat
       </button>
     </div>
   );
