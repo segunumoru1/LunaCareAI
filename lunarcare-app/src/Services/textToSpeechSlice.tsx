@@ -22,6 +22,12 @@ export const fetchAudio = createAsyncThunk(
   }
 );
 
+export interface TextToSpeechState {
+  audioUrl: string;
+  error: string;
+  loading: boolean;
+}
+
 // Slice
 export const textToSpeechSlice = createSlice({
   name: "textToSpeech",
@@ -29,7 +35,8 @@ export const textToSpeechSlice = createSlice({
     audioUrl: "",
     error: "null",
     loading: false,
-  },
+  } as TextToSpeechState,
+
   reducers: {},
   extraReducers: (builder) => {
     builder

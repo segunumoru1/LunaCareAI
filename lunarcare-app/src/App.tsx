@@ -7,6 +7,8 @@ import { ReactComponent as HomeIcon } from "./Assets/Icons/home.svg";
 import { ReactComponent as SupportIcon } from "./Assets/Icons/messages-2.svg";
 import CircularNavButton from "./Components/Common/CircularNavButton/CircularNavButton";
 import { ReactComponent as HealthTrackerIcon } from "./Assets/Icons/health.svg";
+import Voice from "./Components/Voice/Voice";
+import ToggleSwitch from "./Components/Common/ToggleSwitch/ToggleSwitch";
 
 interface IState {
   currentTab: string;

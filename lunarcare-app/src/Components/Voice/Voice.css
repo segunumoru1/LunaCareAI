@@ -43,6 +43,18 @@
   box-sizing: border-box; /* Include padding and border in width */
 }
 
+.record-button {
+  width: fit-content;
+  background-color: #ff3d00;
+  color: white;
+  border: none;
+  padding: 10px 12px;
+  border-radius: 50%;
+  cursor: pointer;
+  font-size: 1rem;
+  transition: background-color 0.3s ease;
+}
+
 .tip-box {
   text-align: left;
   height: 250px; /* Set the height of the rectangle */
@@ -67,16 +79,18 @@
   flex-direction: column;
 }
 
-.avatar-container-home {
+.avatar-container {
   width: 800px;
+  height: 500px;
   margin: auto;
   padding: 20px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   border-radius: 8px;
-  background-color: #fff;
   display: flex;
   justify-content: center;
   flex-direction: column;
+  align-items: center;
+  background-color: #f4f8fb;
 }
 
 .block-center-align {
