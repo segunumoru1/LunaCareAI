@@ -1,7 +1,12 @@
 import React from "react";
 import { BrowserRouter as Router, Route, Routes, Link } from "react-router-dom";
 import Home from "./Components/Home/Home";
-import Messages from "./Components/Api/DjangoMessages"; 
+import Messages from "./Components/Api/DjangoMessages";
+import "./App.css";
+import { ReactComponent as HomeIcon } from "./Assets/Icons/home.svg";
+import { ReactComponent as SupportIcon } from "./Assets/Icons/messages-2.svg";
+import CircularNavButton from "./Components/Common/CircularNavButton/CircularNavButton";
+import { ReactComponent as HealthTrackerIcon } from "./Assets/Icons/health.svg";
 
 interface IState {
   currentTab: string;
@@ -15,106 +20,53 @@ class App extends React.Component<{}, IState> {
     };
   }
 
-  setActiveTab = (tab: string) => {
-    this.setState({ currentTab: tab });
-  };
-
   render() {
+    const setActiveTab = (tab: string) => {
+      this.setState({ currentTab: tab });
+    };
     return (
       <Router>
         <div className="App">
-          <style>
-            {`
-              body {
-                font-family: Arial, sans-serif;
-              }
-              header {
-                background: #f2f2f2;
-                padding: 20px 40px;
-                text-align: center;
-              }
-              nav ul {
-                list-style-type: none;
-                padding: 0;
-                margin: 0;
-                display: flex;
-                justify-content: center;
-              }
-              nav ul li {
-                margin: 0 10px;
-              }
-              nav ul li a {
-                text-decoration: none;
-                color: #333;
-                font-size: 16px;
-                padding: 10px 20px;
-                border: 2px solid transparent;
-                border-radius: 10px;
-                transition: all 0.3s ease;
-              }
-              nav ul li a:hover,
-              nav ul li .active {
-                border-color: #666;
-                background-color: #ddd;
-              }
-              main {
-                padding: 20px;
-                text-align: center;
-              }
-            `}
-          </style>
           <header>
-            <h1>Lunar Care</h1>
+            <h1>LunaCare AI</h1>
             <nav>
               <ul>
                 <li
                   className={this.state.currentTab === "home" ? "active" : ""}
                 >
-                  <Link to="/" onClick={() => this.setActiveTab("home")}>
-                    Home
-                  </Link>
-                </li>
-                <li
-                  className={
-                    this.state.currentTab === "resources" ? "active" : ""
-                  }
-                >
-                  <Link
-                    to="/resources"
-                    onClick={() => this.setActiveTab("resources")}
-                  >
-                    Resources
-                  </Link>
+                  <CircularNavButton
+                    icon={HomeIcon}
+                    text="Luna"
+                    showText={true}
+                    to="/"
+                    onClick={() => setActiveTab("home")}
+                  />
                 </li>
                 <li
                   className={
                     this.state.currentTab === "support" ? "active" : ""
                   }
                 >
-                  <Link
+                  <CircularNavButton
+                    icon={SupportIcon}
+                    text="Communities"
+                    showText={true}
                     to="/support"
-                    onClick={() => this.setActiveTab("support")}
-                  >
-                    Support
-                  </Link>
+                    onClick={() => setActiveTab("support")}
+                  />
                 </li>
                 <li
                   className={
                     this.state.currentTab === "tracker" ? "active" : ""
                   }
                 >
-                  <Link
+                  <CircularNavButton
+                    icon={HealthTrackerIcon}
+                    text="Daily Checkin"
+                    showText={true}
                     to="/tracker"
-                    onClick={() => this.setActiveTab("tracker")}
-                  >
-                    Health Tracker
-                  </Link>
-                  <Link
-                    to="/messages"
-                    onClick={() => this.setActiveTab("messages")}
-                  >
-                    Django Messages
-                  </Link>
+                    onClick={() => setActiveTab("tracker")}
+                  />
                 </li>
               </ul>
             </nav>
@@ -136,7 +88,7 @@ class App extends React.Component<{}, IState> {
 
 function Resources() {
   return (
-    <div>
+    <div className="main-content">
       <h2>Resources</h2>
       <p>Find articles, tips, and guides on postpartum care.</p>
     </div>
@@ -145,7 +97,7 @@ function Resources() {
 
 function Support() {
   return (
-    <div>
+    <div className="main-content">
       <h2>Support Groups</h2>
       <p>Connect with other mothers and share experiences and support.</p>
     </div>
@@ -154,7 +106,7 @@ function Support() {
 
 function Tracker() {
   return (
-    <div>
+    <div className="main-content">
       <h2>Health Tracker</h2>
       <p>Track your mood, sleep, nutrition, and other health parameters.</p>
     </div>

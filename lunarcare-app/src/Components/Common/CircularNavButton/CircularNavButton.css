@@ -1,0 +1,39 @@
+.circular-button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: auto; /* Adjust based on content size */
+  padding: 10px 20px; /* Space around content */
+  border-radius: 25px; /* Adjust for desired curvature, lower value for more oval */
+  border: none;
+  background-color: #ffffff; /* Default background */
+  cursor: pointer;
+  overflow: hidden;
+  transition: background-color 0.3s ease;
+}
+
+.circular-button:hover {
+  background-color: #fff3e0; /* Very light orange on hover */
+}
+
+.circular-button .button-icon {
+  width: 30px; /* Fixed width for the icon */
+  height: 30px; /* Fixed height for the icon */
+  margin-right: 10px; /* Space between the icon and text */
+}
+
+.circular-button .button-text {
+  display: none; /* Initially hide text */
+  white-space: nowrap;
+  transition: opacity 0.3s ease;
+}
+
+.circular-button:hover .button-text {
+  display: block; /* Show text on hover */
+  opacity: 1;
+}
+
+.row-align {
+  display: flex;
+  align-items: center;
+}

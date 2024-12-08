@@ -1,36 +1,57 @@
-body {
-  font-family: Arial, sans-serif;
-}
-header {
-  background: #f2f2f2;
-  padding: 20px 40px;
-  text-align: center;
-}
-nav ul {
-  list-style-type: none;
-  padding: 0;
+/* Main container styling */
+body,
+html {
+  height: 100%;
   margin: 0;
+  padding: 0; /* Ensures there is no default padding */
+}
+
+/* Header styling */
+header {
   display: flex;
-  justify-content: center;
+  flex-direction: column;
+  align-items: flex-start; /* Aligns children to the start of the flex container */
+  height: 100vh; /* Full height of the viewport */
+  width: 200px; /* Set a fixed width */
+  position: fixed; /* Fixed position */
+  top: 0; /* Align top */
+  left: 0; /* Align left */
+  background-color: white; /* Light grey background */
+  box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1); /* Shadow on the right */
+  padding: 20px; /* Padding around the content */
+  overflow-y: auto; /* Adds scroll bar if content exceeds screen height */
 }
+
+/* Navigation and list styling */
+nav ul {
+  list-style: none; /* Remove default list styling */
+  padding: 0; /* Remove default padding */
+  margin: 0; /* Ensure no default margin */
+  width: 100%; /* Full width of the header */
+}
+
 nav ul li {
-  margin: 0 10px;
+  width: 100%; /* Full width to match the parent container */
+  margin-bottom: 10px; /* Space between items */
 }
+
 nav ul li a {
-  text-decoration: none;
-  color: #333;
-  font-size: 16px;
-  padding: 10px 20px;
-  border: 2px solid transparent;
-  border-radius: 10px;
-  transition: all 0.3s ease;
+  text-decoration: none; /* Remove underline from links */
+  color: #333; /* Dark grey text */
+  font-size: 16px; /* Font size */
+  padding: 8px; /* Padding around links */
+  display: block; /* Make links block to fill space */
+  width: 100%; /* Ensure links take full width of the list item */
 }
+
 nav ul li a:hover,
-nav ul li .active {
-  border-color: #666;
-  background-color: #ddd;
+nav ul li.active a {
+  background-color: #ddd; /* Light grey background on hover/active */
+  border-radius: 4px; /* Rounded corners for aesthetics */
 }
-main {
-  padding: 20px;
-  text-align: center;
+
+.main-content {
+  margin-left: 300px; /* Match the width of the header */
+  padding: 20px; /* Padding around the content */
+  background-color: #f4f8fb;
 }

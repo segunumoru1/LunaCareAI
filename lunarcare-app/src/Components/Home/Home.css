@@ -44,10 +44,10 @@
 }
 
 .tip-box {
-  width: 475px; /* Set the width of the rectangle */
+  text-align: left;
   height: 250px; /* Set the height of the rectangle */
   padding: 10px; /* Padding inside the box for some space around the text */
-  margin: 20px; /* Optional: Adds space around the outer edge of the box */
+  margin: 5px; /* Optional: Adds space around the outer edge of the box */
   overflow-y: auto; /* Enables vertical scrolling if content overflows */
   background-color: #f4f4f4; /* Light grey background for visibility */
   border: 1px solid #ccc; /* Light grey border for a subtle box outline */
@@ -57,4 +57,54 @@
   line-height: 1.5; /* Line height for better readability */
   border-radius: 5px; /* Optional: Rounds the corners of the box */
   box-sizing: border-box; /* Includes padding and border in the element's total width and height */
+}
+
+.avatar-container {
+  width: 800px;
+  margin: auto;
+  padding: 20px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  border-radius: 8px;
+  background-color: #fff;
+}
+
+.avatar-header h1 {
+  margin: 0;
+  color: #333;
+}
+
+.avatar-header p {
+  color: #666;
+  font-style: italic;
+}
+
+.avatar-input-group {
+  display: flex;
+  align-items: center;
+  margin-top: 20px;
+}
+
+.avatar-input-group input {
+  flex-grow: 1;
+  padding: 10px;
+  border: 2px solid #ccc;
+  border-radius: 8px;
+  margin-right: 8px;
+}
+
+.avatar-input-group button {
+  padding: 10px 20px;
+  background-color: #ff3d00;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+.avatar-input-group button:hover {
+  background-color: #0056b3;
+}
+
+.white-stroke {
+  stroke: white;
 }

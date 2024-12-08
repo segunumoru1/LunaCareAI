@@ -6,6 +6,7 @@ import { AppDispatch } from "../../store";
 import "./Home.css";
 import MarkdownRenderer from "../Common/MarkdownRender";
 import { fetchAudio } from "../../Services/textToSpeechSlice";
+import { ReactComponent as SendToAIIcon } from "../../Assets/Icons/send-2.svg";
 
 function Home() {
   const [inputValue, setInputValue] = useState("");
@@ -40,39 +41,36 @@ function Home() {
   }, [currentTip]);
 
   return (
-    <div>
-      <h2>Welcome to Lunar Care</h2>
-      <div className="tip-container">
-        <p>
-          Helping you navigate through postpartum with care and understanding.
-        </p>
-        <div>
-          <input
-            className="tip-input"
-            type="text"
-            value={inputValue}
-            onChange={handleInputChange}
-            placeholder="What's on your mind?"
-          />
-          <button className="tip-button" onClick={handleGetTip}>
-            Get a Tip
-          </button>
-        </div>
-        <div className="tip-box">
-          {loading && <p>Loading...</p>} {/* Display loading state */}
-          {error && <p>Error: {error}</p>} {/* Display error message */}
-          {currentTip && currentTip.length > 0 ? (
-            <div>
-              <h3>Current Tip:</h3>
-              <MarkdownRenderer tip={currentTip} />
-            </div>
-          ) : (
-            ""
-          )}
-        </div>
+    <div className="avatar-container">
+      <div className="avatar-header">
+        <h1>Hi, Jane</h1>
+        <p>Can I help you with anything?</p>
+      </div>
+      <div className="avatar-input-group">
+        <input
+          type="text"
+          placeholder="Ask whatever you want..."
+          value={inputValue}
+          onChange={handleInputChange}
+        />
+        <button onClick={handleGetTip}>
+          <SendToAIIcon className="white-stroke" />
+        </button>
+      </div>
+      <div className="tip-box">
+        // {loading && <p>Loading...</p>} {/* Display loading state */}
+        // {error && <p>Error: {error}</p>} {/* Display error message */}
+        //{" "}
+        {currentTip && currentTip.length > 0 ? (
+          <div>
+            <h3>Current Tip:</h3>
+            <MarkdownRenderer tip={currentTip} />
+          </div>
+        ) : (
+          ""
+        )}
       </div>
       {audioUrl && <audio controls src={audioUrl} autoPlay />}
-      {/* Render audio element if URL is available */}
     </div>
   );
 }
