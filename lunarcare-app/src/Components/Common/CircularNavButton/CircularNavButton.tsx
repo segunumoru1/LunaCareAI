@@ -36,7 +36,7 @@ const CircularNavButton: React.FC<CircularNavButtonProps> = ({
         <div>
           <Icon className="button-icon" />
         </div>
-        <div>{showText && <p>{text}</p>}</div>
+        <div>{showText && <p className="button-text">{text}</p>}</div>
       </div>
     </button>
   );

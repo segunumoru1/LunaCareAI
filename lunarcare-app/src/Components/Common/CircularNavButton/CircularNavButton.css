@@ -34,6 +34,7 @@
   width: 30px; /* Fixed width for the icon */
   height: 30px; /* Fixed height for the icon */
   margin-right: 10px; /* Space between the icon and text */
+  stroke: #8a9196;
 }
 
 .circular-button-selected .button-icon {
@@ -46,14 +47,12 @@
 }
 
 .circular-button .button-text {
-  display: none; /* Initially hide text */
   white-space: nowrap;
   transition: opacity 0.3s ease;
-  color: #ff3d00;
+  color: #8a9196;
 }
 
 .circular-button-selected .button-text {
-  display: none; /* Initially hide text */
   white-space: nowrap;
   transition: opacity 0.3s ease;
   color: orangered;

@@ -12,6 +12,12 @@ function Home() {
   const [inputValue, setInputValue] = useState("");
   const dispatch = useDispatch<AppDispatch>();
 
+  const handleKeyDown = (e: any) => {
+    if (e.key === "Enter") {
+      handleGetTip();
+    }
+  };
+
   // Get current tip from the Redux state
   const { currentTip, loading, error } = useSelector(
     (state: any) => state.tips
@@ -52,6 +58,7 @@ function Home() {
           placeholder="Ask whatever you want..."
           value={inputValue}
           onChange={handleInputChange}
+          onKeyDown={handleKeyDown}
         />
         <button onClick={handleGetTip}>
           <SendToAIIcon className="white-stroke" />
