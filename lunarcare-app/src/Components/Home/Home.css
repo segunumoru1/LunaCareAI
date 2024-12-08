@@ -59,6 +59,14 @@
   box-sizing: border-box; /* Includes padding and border in the element's total width and height */
 }
 
+.outer-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  flex-direction: column;
+}
+
 .avatar-container {
   width: 800px;
   margin: auto;
@@ -66,6 +74,16 @@
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   border-radius: 8px;
   background-color: #fff;
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+}
+
+.block-center-align {
+  align-items: center;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
 }
 
 .avatar-header h1 {

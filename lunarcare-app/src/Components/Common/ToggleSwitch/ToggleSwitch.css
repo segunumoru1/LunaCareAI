@@ -1,0 +1,33 @@
+.toggle-container {
+  display: flex;
+  background-color: white;
+  width: 250px;
+  border-radius: 30px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+  font-family: Arial, sans-serif; /* Use your desired font */
+}
+
+.toggle-btn {
+  flex: 1;
+  border: none;
+  background: none;
+  padding: 10px 20px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+  border-radius: 30px;
+  outline: none;
+  color: #555; /* Default text color */
+  font-size: 16px;
+}
+
+.toggle-btn.active {
+  background-color: #ff4500; /* Active state background */
+  color: white; /* Active state text color */
+  stroke: white;
+}
+
+.toggle-btn i {
+  margin-right: 5px;
+}
+
+/* Adjust button padding and margins as needed */
