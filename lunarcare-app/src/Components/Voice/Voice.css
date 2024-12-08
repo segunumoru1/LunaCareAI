@@ -1,0 +1,142 @@
+/* Container for the current tip */
+.tip-container {
+  margin: 20px auto;
+  padding: 20px;
+  border-radius: 8px;
+  background-color: #f3f4f6; /* Light gray background */
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  width: 80%;
+  max-width: 500px;
+  text-align: center;
+}
+
+/* Styling for the tip text */
+.tip-text {
+  font-size: 1.2rem;
+  color: #333;
+  margin-bottom: 20px;
+}
+
+/* Button styling */
+.tip-button {
+  background-color: #007bff; /* Bootstrap blue */
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 1rem;
+  transition: background-color 0.3s ease;
+}
+
+.tip-button:hover {
+  background-color: #0056b3; /* Darker blue */
+}
+
+/* Input styling for tip request */
+.tip-input {
+  padding: 10px;
+  margin-bottom: 20px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  width: calc(100% - 24px); /* Account for padding and border */
+  box-sizing: border-box; /* Include padding and border in width */
+}
+
+.record-button {
+  width: fit-content;
+  background-color: #ff3d00;
+  color: white;
+  border: none;
+  padding: 10px 12px;
+  border-radius: 50%;
+  cursor: pointer;
+  font-size: 1rem;
+  transition: background-color 0.3s ease;
+}
+
+.tip-box {
+  text-align: left;
+  height: 250px; /* Set the height of the rectangle */
+  padding: 10px; /* Padding inside the box for some space around the text */
+  margin: 5px; /* Optional: Adds space around the outer edge of the box */
+  overflow-y: auto; /* Enables vertical scrolling if content overflows */
+  background-color: #f4f4f4; /* Light grey background for visibility */
+  border: 1px solid #ccc; /* Light grey border for a subtle box outline */
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Optional: Adds subtle shadow for depth */
+  font-size: 16px; /* Sets the font size of the text */
+  color: #333; /* Dark grey color for the text for readability */
+  line-height: 1.5; /* Line height for better readability */
+  border-radius: 5px; /* Optional: Rounds the corners of the box */
+  box-sizing: border-box; /* Includes padding and border in the element's total width and height */
+}
+
+.outer-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  flex-direction: column;
+}
+
+.avatar-container {
+  width: 800px;
+  height: 500px;
+  margin: auto;
+  padding: 20px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  border-radius: 8px;
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  align-items: center;
+  background-color: #f4f8fb;
+}
+
+.block-center-align {
+  align-items: center;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.avatar-header h1 {
+  margin: 0;
+  color: #333;
+}
+
+.avatar-header p {
+  color: #666;
+  font-style: italic;
+}
+
+.avatar-input-group {
+  display: flex;
+  align-items: center;
+  margin-top: 20px;
+}
+
+.avatar-input-group input {
+  flex-grow: 1;
+  padding: 10px;
+  border: 2px solid #ccc;
+  border-radius: 8px;
+  margin-right: 8px;
+}
+
+.avatar-input-group button {
+  padding: 10px 20px;
+  background-color: #ff3d00;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+.avatar-input-group button:hover {
+  background-color: #0056b3;
+}
+
+.white-stroke {
+  stroke: white;
+}

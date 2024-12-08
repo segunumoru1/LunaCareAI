@@ -27,7 +27,9 @@ function Home() {
   const [isProcessing, setIsProcessing] = useState(false);
   const dispatch = useDispatch<AppDispatch>();
 
-  const { currentTip, loading, error } = useSelector((state: any) => state.tips);
+  const { currentTip, loading, error } = useSelector(
+    (state: any) => state.tips
+  );
   const ttsAudioUrl = useSelector((state: any) => state.textToSpeech.audioUrl);
 
   const recognitionRef = useRef<SpeechRecognition | null>(null);
@@ -50,99 +52,59 @@ function Home() {
   const startRecording = () => {
     const SpeechRecognition =
       window.webkitSpeechRecognition || window.SpeechRecognition;
-  
+
     if (!SpeechRecognition) {
       alert("Speech recognition is not supported in this browser.");
       return;
     }
-  
+
     const recognition = new SpeechRecognition();
     recognition.lang = "en-US"; // Set language
     recognition.interimResults = false; // Only process final results
     recognition.continuous = false; // Stop automatically when speech ends
     recognitionRef.current = recognition;
-  
+
     recognition.onstart = () => {
       setIsRecording(true);
     };
-  
+
     recognition.onresult = (event: SpeechRecognitionEvent) => {
       const transcript = event.results[0][0].transcript; // Get the spoken text
       setInputValue(transcript); // Update the input field with the text
-  
+
       // Automatically send the message
       dispatch(fetchTip(transcript));
     };
-  
+
     recognition.onerror = (error: Event) => {
       console.error("Speech recognition error:", error);
       setIsRecording(false);
       setIsProcessing(false);
     };
-  
+
     recognition.onend = () => {
       setIsRecording(false);
       setIsProcessing(false);
       console.log("Speech recognition ended.");
     };
-  
+
     setIsProcessing(true);
     recognition.start();
   };
-  
-  
 
   useEffect(() => {
     if (currentTip) {
       dispatch(fetchAudio(currentTip));
     }
   }, [currentTip, dispatch]);
-  
-  return (
-  // start of merge point 1
-    <div className="avatar-container">
-      <div className="avatar-header">
-        <h1>Hi, Jane</h1>
-        <p>Can I help you with anything?</p>
-      </div>
-      <div className="avatar-input-group">
-  <input
-    type="text"
-    placeholder="Ask whatever you want..."
-    value={inputValue}
-    onChange={handleInputChange}
-    onKeyDown={handleKeyDown}
-  />
-  <button onClick={handleGetTip}>
-    <SendToAIIcon className="white-stroke" />
-  </button>
-  <button
-    onClick={startRecording}
-    className={`record-button ${isRecording ? "recording" : ""}`}
-    disabled={isProcessing}
-  >
-    {isRecording ? "Listening..." : "Speak Message"}
-  </button>
-</div>
 
-      <div className="tip-box">
-        {loading && <p>Loading...</p>}
-        {error && <p>Error: {error}</p>}
-        {currentTip && currentTip.length > 0 && (
-          <div>
-            <h3>Current Tip:</h3>
-            <MarkdownRenderer tip={currentTip} />
-          </div>
-        )}
-      </div>
-      {ttsAudioUrl && <audio controls src={ttsAudioUrl} autoPlay />}
- // merge breakpoint
+  return (
     <div className="outer-container">
       <ToggleSwitch toggle={onToggle} />
       {voiceMode ? (
         <Voice />
       ) : (
-        <div className="avatar-container">
+        <div className="avatar-container-home">
           <div className="block-center-align">
             <div className="avatar-header">
               <h1>Hi, Jane</h1>
@@ -173,10 +135,9 @@ function Home() {
               ""
             )}
           </div>
-          {audioUrl && <audio controls src={audioUrl} autoPlay />}
+          {/* {audioUrl && <audio controls src={audioUrl} autoPlay />} */}
         </div>
       )}
-// end of merge breakpoints
     </div>
   );
 }
