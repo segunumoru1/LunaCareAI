@@ -58,9 +58,8 @@ function Home() {
         </button>
       </div>
       <div className="tip-box">
-        // {loading && <p>Loading...</p>} {/* Display loading state */}
-        // {error && <p>Error: {error}</p>} {/* Display error message */}
-        //{" "}
+        {loading && <p>Loading...</p>} {/* Display loading state */}
+        {error && <p>Error: {error}</p>} {/* Display error message */}{" "}
         {currentTip && currentTip.length > 0 ? (
           <div>
             <h3>Current Tip:</h3>

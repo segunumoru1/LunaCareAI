@@ -38,6 +38,7 @@ class App extends React.Component<{}, IState> {
                     icon={HomeIcon}
                     text="Luna"
                     showText={true}
+                    selected={this.state.currentTab === "home"}
                     to="/"
                     onClick={() => setActiveTab("home")}
                   />
@@ -51,6 +52,7 @@ class App extends React.Component<{}, IState> {
                     icon={SupportIcon}
                     text="Communities"
                     showText={true}
+                    selected={this.state.currentTab === "support"}
                     to="/support"
                     onClick={() => setActiveTab("support")}
                   />
@@ -64,6 +66,7 @@ class App extends React.Component<{}, IState> {
                     icon={HealthTrackerIcon}
                     text="Daily Checkin"
                     showText={true}
+                    selected={this.state.currentTab === "tracker"}
                     to="/tracker"
                     onClick={() => setActiveTab("tracker")}
                   />

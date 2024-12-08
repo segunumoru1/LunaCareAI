@@ -12,6 +12,20 @@
   transition: background-color 0.3s ease;
 }
 
+.circular-button-selected {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: auto; /* Adjust based on content size */
+  padding: 10px 20px; /* Space around content */
+  border-radius: 25px; /* Adjust for desired curvature, lower value for more oval */
+  border: none;
+  background-color: #fff3e0; /* Default background */
+  cursor: pointer;
+  overflow: hidden;
+  transition: background-color 0.3s ease;
+}
+
 .circular-button:hover {
   background-color: #fff3e0; /* Very light orange on hover */
 }
@@ -22,10 +36,27 @@
   margin-right: 10px; /* Space between the icon and text */
 }
 
+.circular-button-selected .button-icon {
+  width: 30px; /* Fixed width for the icon */
+  height: 30px; /* Fixed height for the icon */
+  margin-right: 10px; /* Space between the icon and text */
+  stroke: #ff3d00;
+  stroke-width: 1px;
+  stroke-linecap: round;
+}
+
 .circular-button .button-text {
   display: none; /* Initially hide text */
   white-space: nowrap;
   transition: opacity 0.3s ease;
+  color: #ff3d00;
+}
+
+.circular-button-selected .button-text {
+  display: none; /* Initially hide text */
+  white-space: nowrap;
+  transition: opacity 0.3s ease;
+  color: orangered;
 }
 
 .circular-button:hover .button-text {
