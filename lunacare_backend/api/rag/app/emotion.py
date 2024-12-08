@@ -1,15 +1,26 @@
 from transformers import pipeline
+import librosa
+import numpy as np
 
-def detect_emotion(text):
-    """
-    Detects the emotion of the input text using a specified Hugging Face model.
-    """
-    # Explicitly specify the model and revision
-    emotion_analyzer = pipeline(
-        "text-classification", 
-        model="textattack/bert-base-uncased-SST-2",  # Alternative to distilbert
-    )
-    result = emotion_analyzer(text)
-    emotion = result[0]['label']  # Typically "POSITIVE" or "NEGATIVE"
-    score = result[0]['score']
-    return emotion, score
+# Initialize the sentiment analysis pipeline
+sentiment_analysis = pipeline("sentiment-analysis")
+
+def detect_emotion_from_text(text):
+    """Detect emotion or sentiment from text."""
+    results = sentiment_analysis(text)
+    if results:
+        return results[0]['label'], results[0]['score']
+    return "Neutral", 0.0
+
+def extract_audio_features(audio_path):
+    """Extract audio features using librosa."""
+    y, sr = librosa.load(audio_path, sr=None)
+    mfccs = librosa.feature.mfcc(y=y, sr=sr, n_mfcc=13)
+    return np.mean(mfccs.T, axis=0)
+
+def detect_emotion_from_audio(audio_path):
+    """Detect emotion from audio features."""
+    features = extract_audio_features(audio_path)
+    # Placeholder: Replace with a trained emotion detection model
+    # Example return value (fake detection for now)
+    return "Neutral", 0.5
