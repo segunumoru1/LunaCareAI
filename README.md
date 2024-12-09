@@ -65,7 +65,7 @@ This architecture illustrates the integration of various components for a seamle
    - Responses are synthesized using **OpenAI Text-to-Speech** for audio feedback.
    - Recommendations are presented via the **React SPA**.
 
-![Architecture Workflow Diagram Placeholder](#)
+![https://github.com/segunumoru1/LunaCareAI/blob/main/lunarcare-app/public/image.png](#)
 
 ---
 
