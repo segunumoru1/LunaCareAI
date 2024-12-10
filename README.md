@@ -135,4 +135,6 @@ This architecture illustrates the integration of various components for a seamle
 ## **Contact Information**
 For issues, feedback, or contributions, feel free to reach out via the project's [GitHub Issues](https://github.com/your-username/LunaCareAI/issues).
 
+## License
+This project is licensed under the [MIT License](LICENSE).
 
