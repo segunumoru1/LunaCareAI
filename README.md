@@ -210,6 +210,6 @@ This project is licensed under the [MIT License](./LICENSE).
 
 ## **Contributors**
 
-- **[Alex Webb]** – Lead Developer  
-- **[Segun Umoru]** – AI Model Integration  
-- **[Michael Gold]** – Frontend Development 
+- **Alexander Crabbe** – Backend Development  
+- **Segun Umoru** – AI Model Integration  
+- **Michael Gold** – Frontend Development 
